@@ -14,7 +14,7 @@
   --red: #db0b17;        /* rojo de marca — filetes y elementos gráficos */
   --red-text: #ff3a45;   /* 5,7:1 sobre negro — enlaces y texto pequeño */
 
-  max-width: 44rem;      /* 704px: ~70 caracteres por línea con los 19px fijados */
+  max-width: 54rem;      /* 864px: ~80 caracteres por línea a 19px */
   margin-inline: auto;
   padding-inline: 1.5rem;
   color: var(--ink);
@@ -109,8 +109,18 @@
   font-size: 1.1875rem;
   line-height: 1.7;
   margin: 0 0 1.5rem;
+
+  /* Justificado con partición de palabras. Sin `hyphens` el navegador solo
+     puede estirar los espacios, y aparecen los "ríos" de blanco. */
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
   text-wrap: pretty;
 }
+
+/* La entradilla se queda en bandera: es corta y justificarla se nota mucho. */
+/* p.clase para ganar en especificidad a `.nx-article p` */
+.nx-article p.nx-article__standfirst { text-align: left; hyphens: none; }
 
 .nx-article strong { color: #fff; font-weight: 600; }
 
