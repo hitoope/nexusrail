@@ -14,7 +14,7 @@
   --red: #db0b17;        /* rojo de marca — filetes y elementos gráficos */
   --red-text: #ff3a45;   /* 5,7:1 sobre negro — enlaces y texto pequeño */
 
-  max-width: 34rem;      /* con 19px da ~68 caracteres por línea */
+  max-width: 44rem;      /* 704px: ~70 caracteres por línea con los 19px fijados */
   margin-inline: auto;
   padding-inline: 1.5rem;
   color: var(--ink);
