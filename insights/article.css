@@ -23,6 +23,17 @@
   line-height: 1.7;      /* frente al 1,0 heredado */
 }
 
+
+/* ─── Espaciado de página ────────────────────────────────────────────────
+   La cabecera del sitio es position:absolute con 87px de alto y z-index 9999:
+   flota sobre el contenido. Sin este margen superior, el artículo arranca
+   debajo del menú y se solapa con él.
+   ------------------------------------------------------------------------ */
+.nx-page {
+  padding-top: clamp(8rem, 6rem + 5vw, 11rem);
+  padding-bottom: clamp(4rem, 3rem + 3vw, 6rem);
+}
+
 /* ─── Cabecera del artículo ─────────────────────────────────────────────── */
 
 .nx-article__eyebrow {
@@ -131,6 +142,16 @@
 /* ─── Índice de artículos ────────────────────────────────────────────────── */
 
 .nx-index { max-width: 52rem; margin-inline: auto; padding-inline: 1.5rem; }
+
+.nx-index__title {
+  margin: 0 0 3rem;
+  font-family: Montserrat, sans-serif;
+  font-size: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
 
 .nx-card {
   display: block;
