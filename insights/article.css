@@ -1,0 +1,180 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   NEXUS Rail — tipografía de artículo
+
+   Aislada bajo .nx-article: no afecta a ninguna otra parte del sitio.
+   Existe porque el interlineado heredado de Elementor es de 17px sobre texto
+   de 17-20px (relación 0,85-1,0). Sirve para dos líneas sueltas; para 800
+   palabras las líneas se tocan y el texto es ilegible.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.nx-article {
+  --ink: #e9e8e6;        /* blanco roto: el blanco puro sobre negro deslumbra */
+  --ink-soft: #a8a6a2;
+  --rule: #262628;
+  --red: #db0b17;        /* rojo de marca — filetes y elementos gráficos */
+  --red-text: #ff3a45;   /* 5,7:1 sobre negro — enlaces y texto pequeño */
+
+  max-width: 34rem;      /* con 19px da ~68 caracteres por línea */
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  color: var(--ink);
+  font-family: "Source Sans 3", -apple-system, system-ui, sans-serif;
+  font-size: 1.1875rem;  /* 19px */
+  line-height: 1.7;      /* frente al 1,0 heredado */
+}
+
+/* ─── Cabecera del artículo ─────────────────────────────────────────────── */
+
+.nx-article__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red-text);
+}
+.nx-article__eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 2px;
+  background: var(--red);
+}
+
+.nx-article__title {
+  margin: 0 0 1.5rem;
+  font-family: Montserrat, sans-serif;
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.nx-article__standfirst {
+  margin: 0 0 2.5rem;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  border-left: 2px solid var(--red);
+  padding-left: 1.25rem;
+}
+
+.nx-article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin: 0 0 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+.nx-article__meta a { color: var(--ink); text-decoration: none; }
+.nx-article__meta a:hover { color: var(--red-text); }
+.nx-article__meta .sep { color: var(--rule); }
+
+/* ─── Cuerpo ─────────────────────────────────────────────────────────────── */
+
+.nx-article h2 {
+  margin: 3rem 0 1.25rem;
+  font-family: Montserrat, sans-serif;
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.nx-article p {
+  /* Directo, no por herencia: Elementor fija font-size sobre `p` y una regla
+     directa gana siempre a un valor heredado del contenedor. */
+  font-size: 1.1875rem;
+  line-height: 1.7;
+  margin: 0 0 1.5rem;
+  text-wrap: pretty;
+}
+
+.nx-article strong { color: #fff; font-weight: 600; }
+
+.nx-article a {
+  color: var(--red-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.nx-article a:hover { color: #ff858c; }
+
+.nx-article hr {
+  margin: 3rem 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* ─── Cierre ─────────────────────────────────────────────────────────────── */
+
+.nx-article__footer {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+}
+.nx-article__footer strong { color: var(--ink); }
+
+/* ─── Índice de artículos ────────────────────────────────────────────────── */
+
+.nx-index { max-width: 52rem; margin-inline: auto; padding-inline: 1.5rem; }
+
+.nx-card {
+  display: block;
+  padding: 2rem 0;
+  border-top: 1px solid var(--rule, #262628);
+  text-decoration: none;
+  transition: border-color .25s ease;
+}
+.nx-card:last-child { border-bottom: 1px solid #262628; }
+.nx-card:hover { border-top-color: #db0b17; }
+
+.nx-card__meta {
+  font-family: Montserrat, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff3a45;
+}
+.nx-card__title {
+  margin: 0.75rem 0 0.75rem;
+  font-family: Montserrat, sans-serif;
+  font-size: clamp(1.375rem, 1.2rem + 0.9vw, 1.875rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: #fff;
+}
+.nx-card:hover .nx-card__title { color: #ff3a45; }
+.nx-card__excerpt {
+  margin: 0;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #a8a6a2;
+}
+
+/* ─── Móvil ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  /* En móvil el ancho es lo escaso, no el tamaño: 19px se lee bien, pero con
+     24px de margen a cada lado la línea se queda en ~38 caracteres. */
+  .nx-article,
+  .nx-index { padding-inline: 1.125rem; }
+  .nx-article__standfirst { font-size: 1.1875rem; padding-left: 1rem; }
+  .nx-article h2 { margin-top: 2.5rem; }
+}
