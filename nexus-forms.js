@@ -3,29 +3,31 @@
 
    ▼▼▼  LO ÚNICO QUE TIENES QUE CAMBIAR ESTÁ AQUÍ DEBAJO  ▼▼▼
 
-   1. Entra en https://formspree.io y crea una cuenta (gratis).
-   2. Crea un formulario nuevo y pon como destinatario  info@nexusrail.ca
-   3. Formspree te dará una dirección tipo  https://formspree.io/f/abcdwxyz
-   4. Pega ESA dirección entre las comillas de abajo y guarda el fichero.
+   1. Entra en https://web3forms.com
+   2. Escribe  info@nexusrail.ca  en la caja de la portada y pulsa el botón.
+   3. Te llega un correo con una "Access Key" (una cadena larga con guiones).
+   4. Pégala entre las comillas de abajo y guarda el fichero.
 
-   Puedes usar el mismo endpoint para los dos formularios: en el correo verás
-   de cuál viene por el campo "formulario".
+   Gratis, 250 envíos al mes, sin crear cuenta ni tarjeta. Los mensajes te
+   llegan al correo que hayas indicado.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-var NEXUS_FORM_ENDPOINT = "https://formspree.io/f/PEGA_AQUI_TU_CODIGO";
+var NEXUS_ACCESS_KEY = "b524d576-5eeb-4094-a6c7-ad37a1237aa3";
 
-/* ═══════════════════ a partir de aquí no hace falta tocar nada ═══════════ */
+/* ═══════════════ a partir de aquí no hace falta tocar nada ═══════════════ */
+
+var NEXUS_FORM_ENDPOINT = "https://api.web3forms.com/submit";
 
 (function () {
   'use strict';
 
-  var SIN_CONFIGURAR = NEXUS_FORM_ENDPOINT.indexOf("PEGA_AQUI") !== -1;
+  var SIN_CONFIGURAR = NEXUS_ACCESS_KEY.indexOf("PEGA_AQUI") !== -1;
 
   var TEXTO = {
     enviando: 'Sending…',
     ok: 'Thank you. Your message has been sent — we’ll get back to you shortly.',
     error: 'Sorry, your message could not be sent. Please email us directly at info@nexusrail.ca',
-    sinConfig: 'Este formulario todavía no está conectado. Falta pegar el código de Formspree en nexus-forms.js.'
+    sinConfig: 'Este formulario todavía no está conectado. Falta pegar la Access Key de Web3Forms en nexus-forms.js.'
   };
 
   /* --- Mensaje de resultado, con el aspecto del sitio -------------------- */
@@ -61,6 +63,15 @@ var NEXUS_FORM_ENDPOINT = "https://formspree.io/f/PEGA_AQUI_TU_CODIGO";
       return;
     }
 
+    // Trampa antispam. Va antes de bloquear el botón: si saltara después,
+    // el botón se quedaría deshabilitado al salir por aquí.
+    var trampa = form.querySelector('[name="_gotcha"]');
+    if (trampa && trampa.value) {
+      form.reset();
+      pinta(form, 'ok', TEXTO.ok);   // al bot le decimos que todo fue bien
+      return;
+    }
+
     var boton = form.querySelector('button[type="submit"], input[type="submit"]');
     var etiquetaOriginal = boton ? boton.innerHTML : null;
 
@@ -72,8 +83,13 @@ var NEXUS_FORM_ENDPOINT = "https://formspree.io/f/PEGA_AQUI_TU_CODIGO";
     pinta(form, 'wait', TEXTO.enviando);
 
     var datos = new FormData(form);
+    datos.delete('_gotcha');
+    datos.append('access_key', NEXUS_ACCESS_KEY);
+    datos.append('from_name', 'nexusrail.ca');
     // de qué página viene, para distinguirlos en el correo
-    datos.append('formulario', document.title.split('–')[0].trim() || location.pathname);
+    var origen = document.title.split('|')[0].trim() || location.pathname;
+    datos.append('formulario', origen);
+    if (!datos.get('subject')) datos.set('subject', 'Web: ' + origen);
 
     fetch(NEXUS_FORM_ENDPOINT, {
       method: 'POST',
@@ -86,10 +102,7 @@ var NEXUS_FORM_ENDPOINT = "https://formspree.io/f/PEGA_AQUI_TU_CODIGO";
           pinta(form, 'ok', TEXTO.ok);
         } else {
           return r.json().then(function (d) {
-            var det = d && d.errors && d.errors.length
-              ? d.errors.map(function (e) { return e.message; }).join('. ')
-              : TEXTO.error;
-            pinta(form, 'error', det);
+            pinta(form, 'error', (d && d.message) ? d.message : TEXTO.error);
           }).catch(function () { pinta(form, 'error', TEXTO.error); });
         }
       })
